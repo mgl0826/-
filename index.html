@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>추천채용정보 포스터 제작기</title>
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;background:#eef1f7;color:#202936;font-family:"Pretendard",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+  .app{display:grid;grid-template-columns:390px 1fr;height:100vh;overflow:hidden}
+  .panel{background:#fff;padding:24px;overflow-y:auto;overflow-x:hidden;border-right:1px solid #dfe3eb;height:100vh}
+  h1{font-size:22px;margin:0 0 8px}
+  .sub{font-size:13px;color:#687386;margin-bottom:20px}
+  .group{border:1px solid #e1e5ec;border-radius:12px;padding:14px;margin-bottom:12px;background:#fafbfc}
+  .group h2{font-size:15px;margin:0 0 12px;color:#334a9f}
+  label{display:block;font-size:13px;font-weight:700;margin:10px 0 6px}
+  input,select,textarea{width:100%;border:1px solid #ccd3df;border-radius:7px;padding:9px 10px;font:inherit;font-size:13px;background:#fff}
+  textarea{resize:vertical;min-height:70px;line-height:1.55}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .help{font-size:11px;color:#7a8494;margin-top:4px}
+  .checks{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+  .check{display:flex;align-items:center;gap:6px;font-weight:500;margin:0;padding:7px;border:1px solid #e0e4eb;border-radius:6px;background:#fff}
+  .check input{width:auto}
+  .actions{position:sticky;bottom:0;background:#fff;padding-top:12px;display:flex;gap:8px}
+  button{border:0;border-radius:8px;padding:11px 13px;font-weight:700;cursor:pointer}
+  .primary{background:#4259b5;color:#fff;flex:1}
+  .secondary{background:#e9edf5;color:#25304a}
+  .workspace{padding:18px 24px;display:flex;justify-content:center;align-items:flex-start;overflow:hidden;height:100vh}
+  .preview-wrap{width:794px;position:relative;flex:0 0 794px}
+  .preview-label{font-size:12px;color:#667085;margin:0 0 7px}
+  #poster{width:794px;min-height:1010px;background:#fff;position:relative;overflow:hidden;padding:38px 62px 20px;box-shadow:0 12px 35px rgba(35,45,70,.16)}
+  .company-photo-wrap{
+    position:absolute;left:28px;top:28px;width:118px;height:88px;
+    border:none;border-radius:0;background:transparent;
+    display:none;align-items:center;justify-content:center;overflow:hidden;z-index:3;
+  }
+  .company-photo-wrap img{width:100%;height:100%;object-fit:contain;display:block}
+  .blob{position:absolute;background:#c5d0fa}
+  .blob.two{width:130px;height:180px;right:-70px;bottom:80px;border-radius:100px 0 0 0;background:#d9e1ff}
+  .topline{position:relative;text-align:center;font-size:29px;font-weight:900;letter-spacing:0.5px;margin-top:10px}
+  .school{position:absolute;right:0;top:0;text-align:right;font-size:14px;font-weight:800;color:#38519f;line-height:1.4}
+  .school .seal{display:inline-flex;width:24px;height:24px;border-radius:50%;background:#5167b3;color:#fff;align-items:center;justify-content:center;font-size:10px;margin-right:4px}
+  .company{position:relative;text-align:center;color:#4259b5;font-size:77px;line-height:1;font-weight:1000;letter-spacing:-2px;margin:20px 0 14px;word-break:keep-all}
+  .intro{position:relative;text-align:center;font-size:22px;font-weight:900;line-height:1.38;letter-spacing:-1.2px;margin:0 15px 10px;white-space:pre-line;word-break:keep-all}
+  .corp{position:relative;text-align:center;font-size:15px;color:#39424f;margin-bottom:16px;white-space:pre-line}
+  .info-table{position:relative;width:100%;border-collapse:collapse;table-layout:fixed;font-size:15px}
+  .info-table td{border:1px solid #5369b8;padding:13px 14px;vertical-align:middle;word-break:keep-all}
+  .info-table .label{width:115px;background:#7085cc;color:#fff;font-weight:900;text-align:center;font-size:16px}
+  .info-table .value{background:#fff;line-height:1.55}
+  /* 입력창의 줄바꿈을 미리보기에도 그대로 반영 */
+  #pQualification,#pPreference,#pDocuments{white-space:pre-line}
+  .info-table .job{font-size:20px;font-weight:800}
+  .bullets{white-space:pre-line}
+  .bottom{position:relative;margin-top:14px}
+  .deadline{display:inline-block;background:#d8e1ff;border-radius:30px;padding:10px 27px;font-size:22px;font-weight:1000;color:#1e2938}
+  .contact{font-size:21px;line-height:1.5;font-weight:900;margin-top:9px;white-space:pre-line;letter-spacing:-.5px}
+  .process{font-size:18px;font-weight:700;line-height:1.6;margin-top:5px;white-space:pre-line}
+  .process span{color:#4259b5}
+  .illustration{position:absolute;right:20px;bottom:-2px;width:205px;height:190px}
+  .card{position:absolute;border:3px solid #18212b;background:#fff;border-radius:4px;width:105px;height:145px;transform:rotate(-7deg);right:72px;top:6px}
+  .card:before{content:"";position:absolute;left:16px;top:18px;width:62px;height:15px;background:#b6c4fa;border-radius:8px}
+  .card:after{content:"";position:absolute;left:17px;bottom:18px;width:64px;height:44px;background:#c2cdf7;border-radius:4px}
+  .magnify{position:absolute;width:75px;height:75px;border:9px solid #18212b;border-radius:50%;right:38px;top:57px;background:#fff}
+  .magnify:after{content:"";position:absolute;width:65px;height:15px;background:#18212b;right:-53px;bottom:-31px;transform:rotate(45deg);border-radius:10px}
+  .magnify:before{content:"";position:absolute;width:28px;height:28px;border-radius:50%;background:#b8c5f8;left:15px;top:14px}
+  .back-card{position:absolute;right:0;bottom:4px;width:125px;height:165px;border:3px solid #18212b;background:#dce3ff;transform:rotate(-2deg);z-index:0}
+  @media(max-width:1050px){
+    .app{grid-template-columns:1fr}.panel{border-right:0;border-bottom:1px solid #ddd}.workspace{padding:20px}
+    .preview-wrap{overflow:auto}.preview-label{margin-top:0}
+  }
+</style>
+<style>
+@import url("https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css");
+</style>
+
+</head>
+<body>
+<div class="app">
+  <aside class="panel">
+    <h1>추천채용정보 포스터 제작기</h1>
+    <div class="sub">내용을 입력하면 오른쪽 포스터에 실시간으로 반영됩니다.</div>
+
+    <div class="group">
+      <h2>① 기본 정보</h2>
+      <label>기업 이미지</label>
+      <input id="companyImage" type="file" accept="image/*">
+      <div class="help">JPG, PNG 등 이미지를 선택하면 포스터 좌측 상단에 표시됩니다.</div>
+      <button type="button" class="secondary" id="removeImage" style="margin-top:8px;width:100%">기업 이미지 삭제</button>
+      <label>추천채용번호</label><input id="number" type="number" min="0" step="1" value="">
+      <label>기업명</label><input id="company" value="">
+      <label>기업 한 줄 소개</label><textarea id="intro"></textarea>
+    </div>
+
+    <div class="group">
+      <h2>② 기업 정보</h2>
+      <div class="row">
+        <div><label>기업규모</label><select id="size"><option>대기업</option><option selected>중견기업</option><option>중소기업</option><option>공공기관</option><option>기타</option></select></div>
+        <div><label>사원 수</label><input id="employees" value="약 630명~640명"></div>
+      </div>
+      <label>본사</label><input id="hq" value="">
+    </div>
+
+    <div class="group">
+      <h2>③ 채용 내용</h2>
+      <label>모집 직무명</label><input id="job" value="">
+      <label>담당 업무 <span class="help">줄바꿈으로 항목을 구분하세요.</span></label>
+      <textarea id="duties"></textarea>
+    </div>
+
+    <div class="group">
+      <h2>④ 고용 형태</h2>
+      <div class="row">
+        <div><label>고용형태</label><select id="employment"><option selected>계약직</option><option>정규직</option></select></div>
+        <div><label>수습기간</label><select id="probation"><option selected>없음</option><option>수습 1개월</option><option>수습 2개월</option><option>수습 3개월</option><option>수습 6개월</option></select></div>
+      </div>
+      <div class="row">
+        <div><label>계약기간</label><select id="contract"><option selected>해당없음</option><option>계약 3개월</option><option>계약 6개월</option><option>계약 1년</option><option>계약 2년</option></select></div>
+        <div><label>정규직 전환</label><select id="conversion"><option selected>해당없음</option><option>정규직 전환 가능</option><option>정규직 전환 검토</option><option>정규직 전환 불가</option></select></div>
+      </div>
+    </div>
+
+    <div class="group">
+      <h2>⑤ 연봉 / 근무 정보</h2>
+      <label>연봉 설정</label><select id="salaryType"><option selected>회사내규</option><option>직접입력(금액)</option></select>
+      <label>금액 <span class="help">(단위: 만원)</span></label><input id="salary" type="text" inputmode="numeric" disabled placeholder="예: 3,600">
+      <label>근무지</label><input id="location" value="">
+      <label>근무시간</label><input id="hours" value="">
+    </div>
+
+    <div class="group">
+      <h2>⑥ 지원 자격 / 우대사항</h2>
+      <label>지원 자격</label><textarea id="qualification"></textarea>
+      <label>우대사항</label><textarea id="preference"></textarea>
+      <label>제출 서류 <span class="help">포스터에 표시할 제출 서류를 직접 입력하세요.</span></label>
+      <textarea id="documents"></textarea>
+    </div>
+
+    <div class="group">
+      <h2>⑦ 전형 절차</h2>
+      <div class="checks" id="checks">
+        <label class="check"><input type="checkbox" value="서류전형">서류전형</label>
+        <label class="check"><input type="checkbox" value="인적성 검사">인적성 검사</label>
+        <label class="check"><input type="checkbox" value="1차면접">1차면접</label>
+        <label class="check"><input type="checkbox" value="2차면접">2차면접</label>
+        <label class="check"><input type="checkbox" value="채용검진">채용검진</label>
+        <label class="check"><input type="checkbox" value="최종합격">최종합격</label>
+      </div>
+      <button class="secondary" id="resetProcess" style="margin-top:8px;width:100%">전형 절차 초기화</button>
+    </div>
+
+    <div class="group">
+      <h2>⑧ 마감 / 담당자</h2>
+      <div class="row">
+        <div><label>마감일</label><input id="deadline" type="date" value="2026-09-15"></div>
+        <div><label>담당자</label><input id="manager" value=""></div>
+      </div>
+    </div>
+
+    <div class="actions">
+      <button class="secondary" id="resetAll">전체 초기화</button>
+      <button class="primary" id="download">PNG 이미지 저장</button>
+    </div>
+  </aside>
+
+  <main class="workspace">
+    <div class="preview-wrap">
+      <div class="preview-label">미리보기 · A4 비율 포스터</div>
+      <div id="poster">
+        <div class="company-photo-wrap" id="companyPhotoWrap">
+          <img id="pCompanyImage" alt="기업 이미지">
+        </div>
+        <div class="blob two"></div>
+        <div class="topline" id="pNumber">추천채용 947번</div>
+        <div class="company" id="pCompany">카펠발레오</div>
+        <div class="intro" id="pIntro"></div>
+        <div class="corp" id="pCorp"></div>
+
+        <table class="info-table">
+          <tr><td class="label">직 무</td><td class="value"><div class="job" id="pJob"></div><div class="bullets" id="pDuties"></div></td></tr>
+          <tr><td class="label">고용 형태</td><td class="value" id="pEmployment"></td></tr>
+          <tr><td class="label">연 봉</td><td class="value" id="pSalary"></td></tr>
+          <tr><td class="label">근무지</td><td class="value" id="pLocation"></td></tr>
+          <tr><td class="label">근무 형태</td><td class="value" id="pHours"></td></tr>
+          <tr><td class="label">지원 자격</td><td class="value" id="pQualification"></td></tr>
+          <tr><td class="label">우대사항</td><td class="value" id="pPreference"></td></tr>
+          <tr><td class="label">제출 서류</td><td class="value" id="pDocuments"></td></tr>
+        </table>
+
+        <div class="bottom">
+          <div class="deadline" id="pDeadline">마감 9월 15일</div>
+          <div class="contact">담당자 : <span id="pManager">조형래 컨설턴트 (내선 692)</span></div>
+          <div class="process" id="pProcess">전형절차 : 서류전형 → 인적성 검사 → 1차면접 → 2차면접 → 채용검진 → 최종합격</div>
+        </div>
+        <div class="illustration"><div class="back-card"></div><div class="card"></div><div class="magnify"></div></div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<script>
+const $ = id => document.getElementById(id);
+const ids = ["number","company","intro","size","employees","hq","job","duties","employment","probation","contract","conversion","salaryType","salary","location","hours","qualification","preference","documents","deadline","manager"];
+
+function formatSalary(v){
+  const digits=String(v??"").replace(/\D/g,"");
+  return digits ? Number(digits).toLocaleString("ko-KR") : "";
+}
+
+function esc(s){return String(s??"").replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[m]));}
+function fmtDate(v){
+  if(!v) return "마감일 미정";
+  const d=new Date(v+"T00:00:00");
+  return `마감 ${d.getMonth()+1}월 ${d.getDate()}일`;
+}
+function update(){
+  $("pNumber").textContent = `추천채용 ${$("number").value || ""}번`;
+  $("pCompany").textContent = $("company").value || "기업명";
+  $("pIntro").textContent = $("intro").value || "";
+  $("pCorp").textContent = `기업규모 : ${$("size").value}  /  사원 수 : ${$("employees").value}  /  본사 : ${$("hq").value}`;
+  $("pJob").textContent = $("job").value || "";
+  const duty = $("duties").value.trim();
+  $("pDuties").textContent = duty ? duty.split("\n").map(x=>"• "+x).join("\n") : "";
+  const employment = $("employment").value;
+  const details = [];
+  if($("probation").value !== "없음") details.push($("probation").value);
+  if($("contract").value !== "해당없음") details.push($("contract").value);
+  if($("conversion").value !== "해당없음") details.push($("conversion").value);
+  $("pEmployment").textContent = [employment,...details].join(" / ");
+  $("pSalary").textContent = $("salaryType").value === "회사내규"
+    ? "회사 내규"
+    : (($("salary").value ? formatSalary($("salary").value) : "0") + "만원");
+  $("pLocation").textContent = $("location").value || "";
+  $("pHours").textContent = $("hours").value || "";
+  $("pQualification").textContent = $("qualification").value || "";
+  $("pPreference").textContent = $("preference").value || "";
+  $("pDocuments").textContent = $("documents").value || "";
+  $("pDeadline").textContent = fmtDate($("deadline").value);
+  $("pManager").textContent = $("manager").value || "";
+  const selected=[...document.querySelectorAll("#checks input:checked")].map(x=>x.value);
+  $("pProcess").innerHTML = selected.length ? "전형절차 : " + selected.map(esc).join(" → ") : "전형절차 : 선택된 전형 없음";
+}
+let companyImageData = "";
+
+$("companyImage").addEventListener("change", function(e){
+  const file=e.target.files && e.target.files[0];
+  if(!file){
+    companyImageData="";
+    $("companyPhotoWrap").style.display="none";
+    return;
+  }
+  if(!file.type.startsWith("image/")){
+    alert("이미지 파일만 선택할 수 있습니다.");
+    this.value="";
+    return;
+  }
+  const reader=new FileReader();
+  reader.onload=function(ev){
+    companyImageData=ev.target.result;
+    $("pCompanyImage").src=companyImageData;
+    $("companyPhotoWrap").style.display="flex";
+  };
+  reader.readAsDataURL(file);
+});
+
+$("removeImage").addEventListener("click",function(){
+  companyImageData="";
+  $("companyImage").value="";
+  $("pCompanyImage").removeAttribute("src");
+  $("companyPhotoWrap").style.display="none";
+});
+
+ids.forEach(id=>$(id).addEventListener("input",update));
+
+$("salary").addEventListener("input",function(){
+  const formatted=formatSalary(this.value);
+  this.value=formatted;
+  update();
+});
+["size","employment","probation","contract","conversion","salaryType"].forEach(id=>$(id).addEventListener("change",update));
+document.querySelectorAll("#checks input").forEach((el)=>el.addEventListener("change",update));
+$("salaryType").addEventListener("change",()=>{$("salary").disabled=$("salaryType").value==="회사내규"; update();});
+$("salary").addEventListener("input",function(){
+  const digits=this.value.replace(/\D/g,"");
+  this.value=digits ? Number(digits).toLocaleString("ko-KR") : "";
+  update();
+});
+$("resetProcess").onclick=()=>{document.querySelectorAll("#checks input").forEach(x=>x.checked=false);update();};
+$("resetAll").onclick=()=>location.reload();
+
+$("download").onclick=async()=>{
+  const btn=$("download"); btn.disabled=true; btn.textContent="이미지 생성 중...";
+  try{
+    if(typeof html2canvas==="undefined") throw new Error("html2canvas 로딩 실패");
+    const img = $("pCompanyImage");
+    if (companyImageData && img && !img.complete) {
+      await new Promise(resolve => {
+        img.addEventListener("load", resolve, {once:true});
+        img.addEventListener("error", resolve, {once:true});
+      });
+    }
+    const canvas=await html2canvas($("poster"),{scale:2,backgroundColor:"#fff",useCORS:true,logging:false});
+    const a=document.createElement("a");
+    a.download=`추천채용_${$("number").value||"포스터"}.png`;
+    a.href=canvas.toDataURL("image/png");
+    a.click();
+  }catch(e){alert("PNG 저장 중 오류가 발생했습니다. 인터넷 연결을 확인한 후 다시 시도해주세요.");}
+  btn.disabled=false;btn.textContent="PNG 이미지 저장";
+};
+update();
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+<script>
+(function(){
+  function fitPoster(){
+    const ws=document.querySelector('.workspace');
+    const wrap=document.querySelector('.preview-wrap');
+    const poster=document.getElementById('poster');
+    const label=document.querySelector('.preview-label');
+    if(!ws||!wrap||!poster) return;
+    if(window.innerWidth <= 1050){
+      poster.style.transform='';
+      wrap.style.height='';
+      return;
+    }
+    const availableH=ws.clientHeight - 28;
+    const availableW=ws.clientWidth - 10;
+    const scale=Math.min(1, availableH / (poster.offsetHeight + 7), availableW / poster.offsetWidth);
+    poster.style.transform=`scale(${scale})`;
+    poster.style.transformOrigin='top center';
+    wrap.style.height=(poster.offsetHeight*scale + 7)+'px';
+    label.style.width=(poster.offsetWidth*scale)+'px';
+    label.style.marginLeft=((poster.offsetWidth*(1-scale))/2)+'px';
+  }
+  window.addEventListener('resize',fitPoster);
+  window.addEventListener('load',fitPoster);
+  setTimeout(fitPoster,100);
+  setTimeout(fitPoster,500);
+})();
+</script>
+
+</body>
+</html>
