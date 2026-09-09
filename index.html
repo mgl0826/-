@@ -9,15 +9,15 @@
   body{margin:0;background:#eef1f7;color:#202936;font-family:"Pretendard",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
   .app{display:grid;grid-template-columns:390px 1fr;height:100vh;overflow:hidden}
   .panel{background:#fff;padding:24px;overflow-y:auto;overflow-x:hidden;border-right:1px solid #dfe3eb;height:100vh}
-  h1{font-size:22px;margin:0 0 8px}
+  h1{font-size:24px;margin:0 0 8px}
   .sub{font-size:13px;color:#687386;margin-bottom:20px}
   .group{border:1px solid #e1e5ec;border-radius:12px;padding:14px;margin-bottom:12px;background:#fafbfc}
   .group h2{font-size:15px;margin:0 0 12px;color:#334a9f}
-  label{display:block;font-size:13px;font-weight:700;margin:10px 0 6px}
-  input,select,textarea{width:100%;border:1px solid #ccd3df;border-radius:7px;padding:9px 10px;font:inherit;font-size:13px;background:#fff}
+  label{display:block;font-size:16px;font-weight:700;margin:10px 0 6px}
+  input,select,textarea{width:100%;border:1px solid #ccd3df;border-radius:7px;padding:9px 10px;font:inherit;font-size:14px;background:#fff}
   textarea{resize:vertical;min-height:70px;line-height:1.55}
   .row{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-  .help{font-size:11px;color:#7a8494;margin-top:4px}
+  .help{font-size:12px;color:#7a8494;margin-top:4px}
   .checks{display:grid;grid-template-columns:1fr 1fr;gap:6px}
   .check{display:flex;align-items:center;gap:6px;font-weight:500;margin:0;padding:7px;border:1px solid #e0e4eb;border-radius:6px;background:#fff}
   .check input{width:auto}
@@ -31,30 +31,28 @@
   #poster{width:794px;min-height:1010px;background:#fff;position:relative;overflow:hidden;padding:38px 62px 20px;box-shadow:0 12px 35px rgba(35,45,70,.16)}
   .company-photo-wrap{
     position:absolute;left:28px;top:28px;width:118px;height:88px;
-    border:none;border-radius:0;background:transparent;
+    border:2px solid #5369b8;border-radius:10px;background:#fff;
     display:none;align-items:center;justify-content:center;overflow:hidden;z-index:3;
   }
   .company-photo-wrap img{width:100%;height:100%;object-fit:contain;display:block}
   .blob{position:absolute;background:#c5d0fa}
   .blob.two{width:130px;height:180px;right:-70px;bottom:80px;border-radius:100px 0 0 0;background:#d9e1ff}
-  .topline{position:relative;text-align:center;font-size:29px;font-weight:900;letter-spacing:0.5px;margin-top:10px}
+  .topline{position:relative;text-align:center;font-size:32px;font-weight:900;letter-spacing:0.5px;margin-top:10px}
   .school{position:absolute;right:0;top:0;text-align:right;font-size:14px;font-weight:800;color:#38519f;line-height:1.4}
   .school .seal{display:inline-flex;width:24px;height:24px;border-radius:50%;background:#5167b3;color:#fff;align-items:center;justify-content:center;font-size:10px;margin-right:4px}
-  .company{position:relative;text-align:center;color:#4259b5;font-size:77px;line-height:1;font-weight:1000;letter-spacing:-2px;margin:20px 0 14px;word-break:keep-all}
-  .intro{position:relative;text-align:center;font-size:22px;font-weight:900;line-height:1.38;letter-spacing:-1.2px;margin:0 15px 10px;white-space:pre-line;word-break:keep-all}
-  .corp{position:relative;text-align:center;font-size:15px;color:#39424f;margin-bottom:16px;white-space:pre-line}
-  .info-table{position:relative;width:100%;border-collapse:collapse;table-layout:fixed;font-size:15px}
-  .info-table td{border:1px solid #5369b8;padding:13px 14px;vertical-align:middle;word-break:keep-all}
-  .info-table .label{width:115px;background:#7085cc;color:#fff;font-weight:900;text-align:center;font-size:16px}
+  .company{position:relative;text-align:center;color:#4259b5;font-size:82px;line-height:1;font-weight:1000;letter-spacing:-2px;margin:20px 0 14px;word-break:keep-all}
+  .intro{position:relative;text-align:center;font-size:24px;font-weight:900;line-height:1.38;letter-spacing:-1.2px;margin:0 15px 10px;white-space:pre-line;word-break:keep-all}
+  .corp{position:relative;text-align:center;font-size:17px;color:#39424f;margin-bottom:16px;white-space:pre-line}
+  .info-table{position:relative;width:100%;border-collapse:collapse;table-layout:fixed;font-size:17px}
+  .info-table td{border:2px solid #5369b8;padding:9px 14px;vertical-align:middle;word-break:keep-all}
+  .info-table .label{width:115px;background:#7085cc;color:#fff;font-weight:900;text-align:center;font-size:18px}
   .info-table .value{background:#fff;line-height:1.55}
-  /* 입력창의 줄바꿈을 미리보기에도 그대로 반영 */
-  #pQualification,#pPreference,#pDocuments{white-space:pre-line}
-  .info-table .job{font-size:20px;font-weight:800}
+  .info-table .job{font-size:22px;font-weight:800}
   .bullets{white-space:pre-line}
   .bottom{position:relative;margin-top:14px}
-  .deadline{display:inline-block;background:#d8e1ff;border-radius:30px;padding:10px 27px;font-size:22px;font-weight:1000;color:#1e2938}
+  .deadline{display:inline-block;background:#d8e1ff;border-radius:30px;padding:10px 27px;font-size:24px;font-weight:1000;color:#1e2938}
   .contact{font-size:21px;line-height:1.5;font-weight:900;margin-top:9px;white-space:pre-line;letter-spacing:-.5px}
-  .process{font-size:18px;font-weight:700;line-height:1.6;margin-top:5px;white-space:pre-line}
+  .process{font-size:17px;font-weight:700;line-height:1.6;margin-top:5px;white-space:pre-line}
   .process span{color:#4259b5}
   .illustration{position:absolute;right:20px;bottom:-2px;width:205px;height:190px}
   .card{position:absolute;border:3px solid #18212b;background:#fff;border-radius:4px;width:105px;height:145px;transform:rotate(-7deg);right:72px;top:6px}
@@ -95,7 +93,7 @@
       <h2>② 기업 정보</h2>
       <div class="row">
         <div><label>기업규모</label><select id="size"><option>대기업</option><option selected>중견기업</option><option>중소기업</option><option>공공기관</option><option>기타</option></select></div>
-        <div><label>사원 수</label><input id="employees" value="약 630명~640명"></div>
+        <div><label>사원 수</label><input id="employees" value=""></div>
       </div>
       <label>본사</label><input id="hq" value="">
     </div>
@@ -236,7 +234,7 @@ function update(){
   $("pDocuments").textContent = $("documents").value || "";
   $("pDeadline").textContent = fmtDate($("deadline").value);
   $("pManager").textContent = $("manager").value || "";
-  const selected=[...document.querySelectorAll("#checks input:checked")].map(x=>x.value);
+  const selected=processOrder.filter(x=>x.checked).map(x=>x.value);
   $("pProcess").innerHTML = selected.length ? "전형절차 : " + selected.map(esc).join(" → ") : "전형절차 : 선택된 전형 없음";
 }
 let companyImageData = "";
@@ -277,14 +275,18 @@ $("salary").addEventListener("input",function(){
   update();
 });
 ["size","employment","probation","contract","conversion","salaryType"].forEach(id=>$(id).addEventListener("change",update));
-document.querySelectorAll("#checks input").forEach((el)=>el.addEventListener("change",update));
+let processOrder=[];
+document.querySelectorAll("#checks input").forEach((el)=>el.addEventListener("change",()=>{
+  if(el.checked){ processOrder.push(el); } else { processOrder=processOrder.filter(x=>x!==el); }
+  update();
+}));
 $("salaryType").addEventListener("change",()=>{$("salary").disabled=$("salaryType").value==="회사내규"; update();});
 $("salary").addEventListener("input",function(){
   const digits=this.value.replace(/\D/g,"");
   this.value=digits ? Number(digits).toLocaleString("ko-KR") : "";
   update();
 });
-$("resetProcess").onclick=()=>{document.querySelectorAll("#checks input").forEach(x=>x.checked=false);update();};
+$("resetProcess").onclick=()=>{document.querySelectorAll("#checks input").forEach(x=>x.checked=false);processOrder=[];update();};
 $("resetAll").onclick=()=>location.reload();
 
 $("download").onclick=async()=>{
